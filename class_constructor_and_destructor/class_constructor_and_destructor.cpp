@@ -1,20 +1,43 @@
-// class_constructor_and_destructor.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <string>
+#include <Windows.h>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+class Animal {
+public:
+	Animal() {
+		std::cout << "Person " << _name << " created. Count: " << count << std::endl;
+	}
+
+	~Animal() {
+		std::cout << "Person " << _name << " deleted. Count: " << count << std::endl;
+	}
+private:
+	// Поле возраст приватное по умолчанию https://stackoverflow.com/a/1247753
+	unsigned int _age;
+	std::string _name;
+	static inline unsigned count{};
+};
+
+int main() {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	Animal animals[3] {};
+	
+	for (Animal animal : animals) {
+		std::cout << animal.name << std::endl;
+	}
+	
+	std::cout << std::endl << "Имя\tВозраст\tВес" << std::endl;
+	std::cout << animals[4]._name << '\t' << animals[4].age << '\t' << animals[4].weight << std::endl;
+
+	try {
+		animals[4]._age = 2;
+	}
+	catch (...) {
+		std::cout << "У сторонних методов нет доступа к приватным членам класса" << std::endl;
+	}
+
+	std::cout << animals[4]._name << '\t' << animals[4]._age << '\t' << animals[4].weight << std::endl;
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
